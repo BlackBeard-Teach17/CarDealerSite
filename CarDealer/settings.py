@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'cars.apps.CardealerConfig',
+    'cars'
 ]
 
 MIDDLEWARE = [
@@ -48,7 +49,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'CarDealerSite.urls'
+ROOT_URLCONF = 'CarDealer.urls'  # 'CarDealerSite.urls'
 
 TEMPLATES = [
     {
