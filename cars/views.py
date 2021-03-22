@@ -79,3 +79,19 @@ def inventory(request):
     }
 
     return render(request, 'inventory.html', context)
+
+def contact(request):
+    if request.method == 'POST':
+        name = request.POST['name']
+        email = request.POST['email']
+        message = request.POST['message']
+
+        send_mail(
+            'Question from' + name + ' Email ' + email,
+            message,
+            email,
+            ['']
+        )
+        return render(request, 'contact.html')
+    else:
+        return render(request, 'contact.html')
