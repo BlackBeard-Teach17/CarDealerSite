@@ -1,10 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% block content %}
+    <div class="container">
+        <br>Dealer: {{ cars.dealer.name }}
+        <br>Dealer: mail: {{ cars.dealer.email }}
+        <br>Brand: {{ cars.brand }}
+        <br>Category: {{ cars.category }}
+
+        <br>Kilometers: {{ cars.kilometers }}
+        <br>Transmission: {{ cars.transmission }}
+        <br>Year: {{ cars.year }}
+        <br>Fuel: {{ cars.fuel }} l
+        <br>Power: {{ cars.power }} kw
+        <br><h4>Price: {{ cars.price }} R</h4>
+        <br>{{ cars.description }}
+    <br><br>
+     <div class="row">
+         {% if cars.image1 %}
+             <div class="col-md-3">
+                <img src="{{ cars.image1.url }}" width="200px" height="150px" alt="">
+             </div>
+         {% endif %}
+        {% if cars.image2 %}
+            <div class="col-md-3">
+                <img src="{{ cars.image2.url }}" width="200px" height="150px" alt="">
+            </div>
+        {% endif %}
+        {% if car.image3 %}
+            <div class="col-md-3">
+                <img src="{{ cars.image3.url }}" width="200px" height="150px" alt="">
+            </div>
+        {% endif %}
+        {% if cars.image4 %}
+            <div class="col-md-3">
+                <img src="{{ cars.image4.url }}" width="200px" height="150px" alt="">
+            </div>
+        {% endif %}
+     </div>
+    </div>
+{% endblock %}

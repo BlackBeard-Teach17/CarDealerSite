@@ -2,10 +2,13 @@
 {% load static %}
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+{% include 'head.html' %}
 </head>
 <body>
-
+    {% include 'nav.html' %}
+    {% block content %}
+    {% endblock %}
+    {% include 'footer.html' %}
+    {% include 'scripts.html' %}
 </body>
 </html>
