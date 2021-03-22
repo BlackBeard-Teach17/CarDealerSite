@@ -3,6 +3,7 @@ from django.core.mail import send_mail
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import Car
 from .filters import CarFilter
+from dealers.models import Dealer
 
 
 # Create your views here.
@@ -79,6 +80,15 @@ def inventory(request):
     }
 
     return render(request, 'inventory.html', context)
+
+
+def dealers(request):
+    all_dealers = Dealer.objects.all()
+    context = {
+        'all_dealers': all_dealers
+    }
+    return render(request, 'dealers.html', context)
+
 
 def contact(request):
     if request.method == 'POST':
