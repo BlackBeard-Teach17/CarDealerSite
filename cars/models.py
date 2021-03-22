@@ -13,7 +13,8 @@ class Car(models.Model):
     category = models.CharField(max_length=50, choices=CATEGORY)
     image_main = models.ImageField(upload_to='images')
     image1 = models.ImageField(upload_to='images', blank=True)
-
+    image2 = models.ImageField(upload_to='images', blank=True)
+    image3 = models.ImageField(upload_to='images', blank=True)
     kilometers = models.IntegerField()
     TRANSMISSION = (
         ('Manual', 'Manual'),
@@ -34,6 +35,7 @@ class Car(models.Model):
     fuel_tank_ = models.IntegerField(default=10)
     price = models.DecimalField(models.Min(1000))
     description = models.TextField()
+    vin = models.IntegerField(models.Min(11))
     date = models.DateField()
 
     def __str__(self):
