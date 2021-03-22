@@ -44,8 +44,38 @@ def filter_results(request):
     page_obj = paginator.get_page(page)
 
     context = {
-        'all':display_all,
-        'custom_filter':custom_filter,
-        'page_obj':page_obj
+        'all': display_all,
+        'custom_filter': custom_filter,
+        'page_obj': page_obj
     }
     return render(request, 'filter_results.html', context)
+
+
+def car_detail(request, car_id):
+    cars = get_object_or_404(Car, id=car_id)
+
+    context = {
+        'cars': cars
+    }
+
+    render(request, 'car_detail.html', context)
+
+
+def inventory(request):
+    car_inventory = Car.objects.all()
+    page = request.GET.get('page')
+    paginator = Paginator(car_inventory, 5)
+    try:
+        car_inventory = paginator.page(page)
+    except PageNotAnInteger:
+        car_inventory = paginator.page('1')
+    except EmptyPage:
+        car_inventory = paginator.page(paginator.num_pages)
+
+    page_obj = paginator.get_page(page)
+    context = {
+        'car_inventory': car_inventory,
+        'page_obj': page_obj
+    }
+
+    return render(request, 'inventory.html', context)
