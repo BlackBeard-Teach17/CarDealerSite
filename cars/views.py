@@ -30,22 +30,22 @@ def about(request):
 
 
 def filter_results(request):
-    display_all = Car.objects.all()
+    all_cars = Car.objects.all()
     custom_filter = CarFilter(request.GET, queryset=all)
-    display_all = custom_filter.qs
+    all_cars = custom_filter.qs
     page = request.GET.get('page')
-    paginator = Paginator(display_all, 1)
+    paginator = Paginator(all_cars, 1)
     try:
-        display_all = paginator.page(page)
+        all_cars = paginator.page(page)
     except PageNotAnInteger:
-        display_all = paginator.page('1')
+        all_cars = paginator.page('1')
     except EmptyPage:
-        display_all = paginator.page(paginator.num_pages)
+        all_cars = paginator.page(paginator.num_pages)
 
     page_obj = paginator.get_page(page)
 
     context = {
-        'all': display_all,
+        'all_cars': all_cars,
         'custom_filter': custom_filter,
         'page_obj': page_obj
     }
