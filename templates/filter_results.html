@@ -7,31 +7,31 @@
   <form method="get" action="{% url 'filter_results' %}">
     <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4">
   <p>Brand:</p>
-    {{ myFilter.form.brand }}
+    {{ custom_filter.form.brand }}
     </div>
     <div class="col-lg-1 col-md-1 col-sm-4 col-xs-4">
   <p>Category:</p>
-    {{ myFilter.form.category }}
+    {{ custom_filter.form.category }}
     </div>
     <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4">
   <p>Year greater then:</p>
-    {{ myFilter.form.year_gt }}
+    {{ custom_filter.form.year_gt }}
     </div>
     <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4">
   <p>Year less then:</p>
-    {{ myFilter.form.year_lt }}
+    {{ custom_filter.form.year_lt }}
     </div>
     <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4">
-  <p>Price greather then:</p>
-    {{ myFilter.form.price_gt }}
+  <p>Price greater then:</p>
+    {{ custom_filter.form.price_gt }}
     </div>
     <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4">
   <p>Price less then:</p>
-    {{ myFilter.form.price_lt }}
+    {{ custom_filter.form.price_lt }}
     </div>
     <div class="col-lg-1 col-md-1 col-sm-4 col-xs-4">
   <p>Transmission:</p>
-    {{ myFilter.form.transmission }}
+    {{ custom_filter.form.transmission }}
     </div>
 
 
@@ -46,7 +46,7 @@
 
 
 <div class="row">
-  {% for car in all %}
+  {% for car in all_cars %}
   <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
     <div class="auto-listing auto-grid">
       <div class="cs-media">
