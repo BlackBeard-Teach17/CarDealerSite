@@ -1,11 +1,15 @@
 import datetime
 from django.db import models
 from django.urls import reverse
+from django.utils import timezone
+
+from dealers.models import Dealer
 
 
 # Create your models here.
 class Car(models.Model):
-    brand = models.CharField(max_length=100, )
+    dealer = models.ForeignKey(Dealer, on_delete=models.DO_NOTHING, default=0)
+    brand = models.CharField(max_length=100)
     CATEGORY = (
         ('New', 'New'),
         ('Used', 'Used')
@@ -15,7 +19,8 @@ class Car(models.Model):
     image1 = models.ImageField(upload_to='images', blank=True)
     image2 = models.ImageField(upload_to='images', blank=True)
     image3 = models.ImageField(upload_to='images', blank=True)
-    kilometers = models.IntegerField()
+    image4 = models.ImageField(upload_to='images', blank=True)
+    kilometers = models.IntegerField(default=1000)
     TRANSMISSION = (
         ('Manual', 'Manual'),
         ('Automatic', 'Automatic')
@@ -27,16 +32,16 @@ class Car(models.Model):
         ('Hybrid', 'Hybrid'),
         ('Electric', 'Electric')
     )
-    transmission = models.CharField(max_length=50, choices=TRANSMISSION)
-    YEAR_CHOICES = [(r,r) for r in range(2005, datetime.date.today().year + 1)]
+    transmission = models.CharField(max_length=50, choices=TRANSMISSION, default='Manual')
+    YEAR_CHOICES = [(r, r) for r in range(2005, datetime.date.today().year + 1)]
     year = models.IntegerField('year', choices=YEAR_CHOICES, default=datetime.datetime.now().year)
-    power = models.IntegerField()
-    fuel_type = models.CharField(max_length=50, choices=FUEL)
-    fuel_tank_ = models.IntegerField(default=10)
-    price = models.DecimalField(models.Min(1000))
-    description = models.TextField()
-    vin = models.IntegerField(models.Min(11))
-    date = models.DateField()
+    power = models.IntegerField(default=50)
+    fuel_type = models.CharField(max_length=50, choices=FUEL, default='Petrol')
+    fuel_tank_capacity = models.IntegerField(default=10)
+    price = models.DecimalField(models.Min(1000), default=0.0, decimal_places=2, max_digits=10)
+    description = models.TextField(default="Default description")
+    vin = models.IntegerField(models.Min(11), default=123456)
+    date = models.DateField(default=timezone.now)
 
     def __str__(self):
         return self.brand
