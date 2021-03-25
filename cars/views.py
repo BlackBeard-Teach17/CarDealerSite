@@ -31,7 +31,7 @@ def about(request):
 
 def filter_results(request):
     all_cars = Car.objects.all()
-    custom_filter = CarFilter(request.GET, queryset=all)
+    custom_filter = CarFilter(request.GET, queryset=all_cars)
     all_cars = custom_filter.qs
     page = request.GET.get('page')
     paginator = Paginator(all_cars, 1)
