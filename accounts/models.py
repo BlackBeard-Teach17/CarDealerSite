@@ -12,6 +12,8 @@ from django.template.loader import get_template
 from django.urls import reverse
 from django.utils import timezone
 
+from CarDealer.utils import unique_key_generator
+
 DEFAULT_ACTIVATION_DAYS = getattr(settings, 'DEFAULT_ACTIVATION_DAYS', 7)
 
 
@@ -171,7 +173,7 @@ class EmailActivation(models.Model):
                 key_path = reverse("account:email-activate", kwargs={'key': self.key})
                 path = "{base}{path}".format(base=base_url, path=key_path)
                 context = {
-                    'path':path,
+                    'path': path,
                     'email': self.email
                 }
                 txt_ = get_template("registration/emails/verify.txt").render(context)
@@ -179,6 +181,35 @@ class EmailActivation(models.Model):
                 subject = '1-Car Dealer email verification'
                 from_email = settings.DEFAULT_FROM_EMAIL
                 recipient_list = [self.email]
-                sent_mail = send_mail(subject, txt_, from_email, recipient_list,fail_silently=False, html_message=html_)
+                sent_mail = send_mail(subject, txt_, from_email, recipient_list, fail_silently=False,
+                                      html_message=html_)
                 return sent_mail
         return False
+
+
+def pre_save_email_activation(sender, instance, *args, **kwargs):
+    if not instance.activated and not instance.forced_expired:
+        if not instance.key:
+            instance.key = unique_key_generator(instance)
+
+
+pre_save.connect(pre_save_email_activation, sender=EmailActivation)
+
+
+def post_save_user_create_receiver(sender, instance, created, *args, **kwargs):
+    if created:
+        obj = EmailActivation.objects.create(user=instance, email=instance.email)
+        obj.send_activation()
+
+
+post_save.connect(post_save_user_create_receiver, sender=User)
+
+
+class GuestEmail(models.Model):
+    email = models.EmailField()
+    active = models.BooleanField(default=True)
+    update = models.DateTimeField(auto_now=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.email
