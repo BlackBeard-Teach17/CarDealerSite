@@ -36,9 +36,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'cars.apps.CardealerConfig',
+    'accounts',
     'cars',
     'dealers',
     'django_filters',
+
 ]
 
 MIDDLEWARE = [
